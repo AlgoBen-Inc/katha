@@ -1,10 +1,11 @@
-import React, { useState, useEffect } from 'react';
+import { useState, useEffect } from 'react';
 import { parseSlides } from '../../utils/slideParser';
 import rawSlides from 'virtual:slides';
 import { SlideView } from '../Slide/SlideView';
+import { Slide } from '../../types';
 
 export function PrintView() {
-    const [slides, setSlides] = useState([]);
+    const [slides, setSlides] = useState<Slide[]>([]);
 
     useEffect(() => {
         if (rawSlides) {

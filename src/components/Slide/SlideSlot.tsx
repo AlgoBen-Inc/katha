@@ -1,7 +1,13 @@
-import React from 'react';
+
 import { SlideRenderer } from './SlideRenderer';
 
-export function SlideSlot({ name, content, className = "" }) {
+interface SlideSlotProps {
+    name: string;
+    content?: string;
+    className?: string;
+}
+
+export function SlideSlot({ name, content, className = "" }: SlideSlotProps) {
     if (!content) return null;
 
     return (

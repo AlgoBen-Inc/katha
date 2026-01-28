@@ -1,3 +1,57 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+@layer base {
+    :root {
+        /* Default Theme (Modern Clean) */
+        --k-font-heading: 'Inter', sans-serif;
+        --k-font-body: 'Inter', sans-serif;
+        --k-bg-primary: #ffffff;
+        --k-text-primary: #1e293b;
+        --k-text-secondary: #64748b;
+        --k-accent: #3b82f6;
+        --k-code-bg: #1e1e1e;
+    }
+
+    [data-theme='dark'] {
+        --k-bg-primary: #0f172a;
+        --k-text-primary: #f8fafc;
+        --k-text-secondary: #94a3b8;
+        --k-accent: #60a5fa;
+    }
+
+    [data-theme='neon'] {
+        --k-font-heading: 'Orbitron', sans-serif;
+        --k-bg-primary: #000000;
+        --k-text-primary: #00ff41;
+        --k-text-secondary: #008f11;
+        --k-accent: #d200ff;
+        --k-code-bg: #111;
+    }
+
+    [data-theme='minimal'] {
+        --k-font-heading: 'Georgia', serif;
+        --k-font-body: 'Georgia', serif;
+        --k-bg-primary: #fafafa;
+        --k-text-primary: #111;
+        --k-text-secondary: #555;
+        --k-accent: #000;
+    }
+}
+
+body {
+    background-color: var(--k-bg-primary);
+    color: var(--k-text-primary);
+    font-family: var(--k-font-body);
+    transition: background-color 0.3s ease, color 0.3s ease;
+}
+
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+    font-family: var(--k-font-heading);
+}

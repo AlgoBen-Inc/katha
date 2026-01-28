@@ -1,21 +1,26 @@
-import React, { useEffect, useState } from 'react';
-import { createHighlighter } from 'shiki';
+import { useEffect, useState } from 'react';
+import { createHighlighter, Highlighter } from 'shiki';
 
 // Singleton highlighter to avoid re-creation
-let highlighterPromise = null;
+let highlighterPromise: Promise<Highlighter> | null = null;
 
 const getHighlighter = () => {
     if (!highlighterPromise) {
         highlighterPromise = createHighlighter({
             themes: ['dracula'],
-            langs: ['javascript', 'jsx', 'tsx', 'markdown', 'html', 'css', 'python', 'bash', 'json']
+            langs: ['javascript', 'jsx', 'tsx', 'typescript', 'markdown', 'html', 'css', 'python', 'bash', 'json']
         });
     }
     return highlighterPromise;
 };
 
-export function CodeBlock({ className, children }) {
-    const [html, setHtml] = useState(null);
+interface CodeBlockProps {
+    className?: string;
+    children?: React.ReactNode;
+}
+
+export function CodeBlock({ className, children }: CodeBlockProps) {
+    const [html, setHtml] = useState<string | null>(null);
     const language = className?.replace('language-', '') || 'text';
 
     // Ensure children is a string (React children can be complex)

@@ -1,6 +1,8 @@
 # Katha 📖
 
 > **The Developer-First Presentation System.**
+Katha compiles Markdown into a React-based presentation runtime.
+
 > Write in Markdown. Render in React. Style with Tailwind.
 
 It converts Markdown, code blocks, Mermaid diagrams, and structured content into web-based presentations — reproducibly and version-controlled.

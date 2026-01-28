@@ -20,6 +20,7 @@ The developer-first presentation system.
 ---slide---
 ---
 layout: split
+id: layouts-demo
 ---
 
 # Layouts
@@ -35,6 +36,10 @@ This is the **Split Layout**. It allows you to put content on the left...
 Perfect for comparisons or code explanations.
 
 ---slide---
+---
+id: architecture-deep-dive
+theme: neon
+---
 
 # Code Highlighting
 

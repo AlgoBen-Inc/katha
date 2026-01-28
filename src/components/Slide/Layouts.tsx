@@ -2,7 +2,14 @@ import React from 'react';
 import { SlideSlot } from './SlideSlot';
 
 // 1. Default Layout (Title + Content)
-const DefaultLayout = ({ slots }) => (
+import { SlideSlots } from '../types';
+
+interface LayoutProps {
+    slots: SlideSlots;
+}
+
+// 1. Default Layout (Title + Content)
+const DefaultLayout: React.FC<LayoutProps> = ({ slots }) => (
     <div className="w-full h-full p-16 flex flex-col justify-center">
         {/* Default content (usually title + bullets) */}
         <div className="prose prose-xl dark:prose-invert max-w-none">
@@ -12,7 +19,7 @@ const DefaultLayout = ({ slots }) => (
 );
 
 // 2. Title-Only Layout (Centered Big)
-const TitleLayout = ({ slots }) => (
+const TitleLayout: React.FC<LayoutProps> = ({ slots }) => (
     <div className="w-full h-full flex flex-col items-center justify-center text-center p-12 bg-gradient-to-br from-slate-900 via-slate-800 to-black text-white">
         <div className="prose prose-2xl dark:prose-invert">
             <SlideSlot name="default" content={slots?.default} />
@@ -20,9 +27,9 @@ const TitleLayout = ({ slots }) => (
     </div>
 );
 
-// 3. Two-Column Split Layout (New!)
+// 3. Two-Column Split Layout
 // Uses: ::default:: (left) and ::right:: (right)
-const SplitLayout = ({ slots }) => (
+const SplitLayout: React.FC<LayoutProps> = ({ slots }) => (
     <div className="w-full h-full grid grid-cols-2">
         {/* Left Column */}
         <div className="h-full p-12 flex flex-col justify-center bg-slate-50 dark:bg-slate-950 border-r border-slate-200 dark:border-slate-800">
@@ -34,20 +41,20 @@ const SplitLayout = ({ slots }) => (
         {/* Right Column */}
         <div className="h-full p-12 flex flex-col justify-center bg-white dark:bg-black">
             <div className="prose prose-lg dark:prose-invert">
-                <SlideSlot name="right" content={slots?.right} />
+                <SlideSlot name="right" content={slots?.right || ''} />
             </div>
         </div>
     </div>
 );
 
 // Registry
-const LAYOUTS = {
+const LAYOUTS: Record<string, React.FC<LayoutProps>> = {
     default: DefaultLayout,
     title: TitleLayout,
     split: SplitLayout
 };
 
-export const getLayout = (layoutName) => {
-    const key = layoutName?.toLowerCase();
+export const getLayout = (layoutName?: string): React.FC<LayoutProps> => {
+    const key = layoutName?.toLowerCase() || 'default';
     return LAYOUTS[key] || LAYOUTS.default;
 };

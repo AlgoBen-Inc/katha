@@ -1,7 +1,14 @@
-import React from "react";
-import { motion } from "framer-motion";
+import { motion, Variants } from "framer-motion";
 
-export const AnimatedComponent = ({
+interface AnimatedComponentProps {
+    children?: React.ReactNode;
+    animation?: "bounce" | "fade" | "slide" | "pulse" | "spin";
+    duration?: number;
+    delay?: number;
+    className?: string;
+}
+
+export const AnimatedComponent: React.FC<AnimatedComponentProps> = ({
     children,
     animation = "bounce",
     duration = 0.5,
@@ -9,7 +16,7 @@ export const AnimatedComponent = ({
     className = ""
 }) => {
 
-    const variants = {
+    const variants: Variants = {
         bounce: {
             y: [0, -20, 0],
             transition: {
@@ -33,7 +40,7 @@ export const AnimatedComponent = ({
             transition: {
                 duration: duration,
                 repeat: Infinity,
-                repeatType: "reverse"
+                repeatType: "reverse",
             }
         },
         spin: {
