@@ -8,7 +8,7 @@ The developer-first presentation system.
 
 <span className="text-gray-400">Press Arrow Keys to Navigate</span>
 
----
+---slide---
 
 # Why Katha?
 
@@ -17,6 +17,7 @@ The developer-first presentation system.
 *   **Themable**: Built with Tailwind CSS.
 *   **Developer Friendly**: Code highlighting, Hot Module Reloading.
 
+---slide---
 ---
 layout: split
 ---
@@ -33,20 +34,22 @@ This is the **Split Layout**. It allows you to put content on the left...
 
 Perfect for comparisons or code explanations.
 
----
+---slide---
 
 # Code Highlighting
 
 Katha uses Shiki for beautiful code highlighting.
 
 ```javascript
+
 // Example Code
 function hello() {
   console.log("Hello Katha!");
 }
+
 ```
 
----
+---slide---
 
 # Interactive Components
 
@@ -61,7 +64,7 @@ You can embed React components directly in your markdown!
   </CardContent>
 </Card>
 
----
+---slide---
 
 # Animations
 
@@ -73,6 +76,7 @@ Bring your slides to life with component-based animations.
     <AnimatedComponent animation="spin" className="bg-gradient-to-r from-red-500 to-orange-500 rounded-full w-24 h-24 flex items-center justify-center">Spinning</AnimatedComponent>
 </div>
 
+---slide---
 ---
 layout: title
 ---
@@ -82,4 +86,4 @@ layout: title
 Run:
 `katha my-presentation.md`
 
-[Documentation](https://github.com/algobenefits/katha)
+[Documentation](https://github.com/algoben-inc/katha)

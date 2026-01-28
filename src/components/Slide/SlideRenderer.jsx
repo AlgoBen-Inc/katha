@@ -13,7 +13,7 @@ import { AnimatedComponent } from '../AnimatedComponent';
 
 // Define custom components mapping here
 const components = {
-    h1: (props) => <h1 className="text-5xl font-bold mb-6 bg-gradient-to-r from-blue-500 to-purple-600 bg-clip-text text-transparent" {...props} />,
+    h1: (props) => <h1 className="text-5xl font-bold mb-6 bg-gradient-to-r from-blue-500 to-purple-600 bg-clip-text text-transparent leading-tight py-2" {...props} />,
     h2: (props) => <h2 className="text-3xl font-semibold mb-4 text-gray-800 dark:text-gray-100" {...props} />,
     p: (props) => <p className="text-xl mb-4 leading-relaxed text-gray-600 dark:text-gray-300" {...props} />,
     ul: (props) => <ul className="list-disc pl-6 space-y-2 mb-4 text-lg text-gray-700 dark:text-gray-300" {...props} />,

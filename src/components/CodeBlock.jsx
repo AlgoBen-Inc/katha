@@ -31,11 +31,21 @@ export function CodeBlock({ className, children }) {
                     lang: language,
                     theme: 'dracula'
                 });
-                setHtml(highlighted);
+
+                // Inject padding class (p-6 for more space)
+                let finalHtml = highlighted.replace('<pre class="shiki', '<pre class="shiki p-6');
+
+                // If the user passed a custom background class (e.g. via <CodeBlock className="bg-red-900">),
+                // we need to strip Shiki's default inline background-color style so the class takes effect.
+                if (className && className.includes('bg-')) {
+                    finalHtml = finalHtml.replace(/style="[^"]*background-color:[^"]*"/, 'style=""');
+                }
+
+                setHtml(finalHtml);
             } catch (e) {
                 console.warn(`Failed to highlight ${language}:`, e);
-                // Fallback to plain text if lang not supported
-                setHtml(`<pre class="shiki bg-[#282a36] p-4 rounded text-white overflow-auto"><code>${code}</code></pre>`);
+                // Fallback
+                setHtml(`<pre class="shiki bg-[#282a36] p-6 rounded text-white overflow-auto"><code>${code}</code></pre>`);
             }
         });
 
