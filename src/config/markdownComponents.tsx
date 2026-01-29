@@ -62,8 +62,14 @@ export const defaultComponents = {
     cardheader: CardHeader,
     cardtitle: CardTitle,
     cardcontent: CardContent,
-    button: Button,
+    button: (props: any) => (
+        <Button
+            className="bg-[var(--k-accent)] text-white hover:opacity-90 transition-all font-semibold px-8 py-4 rounded-xl shadow-lg border-2 border-white/10 hover:scale-105 active:scale-95"
+            {...props}
+        />
+    ),
     animatedcomponent: AnimatedComponent,
+    animated: AnimatedComponent,
 
     // Click Reveal (Step Animations)
     clickreveal: ClickReveal,

@@ -19,6 +19,7 @@ interface CodeBlockProps {
     className?: string;
     children?: React.ReactNode;
     meta?: string;
+    inline?: boolean;
 }
 
 /**
@@ -45,19 +46,22 @@ function parseLineRanges(meta: string): number[] {
     return lines;
 }
 
-export function CodeBlock({ className, children, meta }: CodeBlockProps) {
+export function CodeBlock({ className, children, meta, inline }: CodeBlockProps) {
     const [html, setHtml] = useState<string | null>(null);
     const language = className?.replace('language-', '') || 'text';
-
-    // Ensure children is a string (React children can be complex)
     const code = Array.isArray(children) ? children.join('') : String(children || '');
 
-    // Handle Mermaid diagrams
-    if (language === 'mermaid') {
-        return <Mermaid code={code} />;
+    // Handle inline code
+    if (inline) {
+        return (
+            <code className="bg-slate-100 dark:bg-slate-800 px-1.5 py-0.5 rounded text-[0.9em] font-mono text-[var(--k-accent)]">
+                {code}
+            </code>
+        );
     }
 
     useEffect(() => {
+        if (language === 'mermaid') return;
         let mounted = true;
 
         getHighlighter().then(highlighter => {
@@ -98,6 +102,11 @@ export function CodeBlock({ className, children, meta }: CodeBlockProps) {
 
         return () => { mounted = false; };
     }, [code, language, meta]);
+
+    // Render Mermaid diagrams
+    if (language === 'mermaid') {
+        return <Mermaid code={code} />;
+    }
 
     if (!html) {
         return (

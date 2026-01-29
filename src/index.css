@@ -5,20 +5,29 @@
 @layer base {
     :root {
         /* Default Theme (Modern Clean) */
-        --k-font-heading: 'Inter', sans-serif;
+        --k-font-heading: 'Plus Jakarta Sans', 'Inter', sans-serif;
         --k-font-body: 'Inter', sans-serif;
         --k-bg-primary: #ffffff;
-        --k-text-primary: #1e293b;
-        --k-text-secondary: #64748b;
-        --k-accent: #3b82f6;
+        --k-text-primary: #0f172a;
+        --k-text-secondary: #475569;
+        --k-accent: #2563eb;
         --k-code-bg: #1e1e1e;
     }
 
     [data-theme='dark'] {
-        --k-bg-primary: #0f172a;
+        --k-bg-primary: #020617;
         --k-text-primary: #f8fafc;
         --k-text-secondary: #94a3b8;
-        --k-accent: #60a5fa;
+        --k-accent: #38bdf8;
+    }
+
+    [data-theme='professional'] {
+        --k-font-heading: 'Lexend', sans-serif;
+        --k-bg-primary: #f8fafc;
+        --k-text-primary: #1e293b;
+        --k-text-secondary: #64748b;
+        --k-accent: #0f172a;
+        --k-code-bg: #1e293b;
     }
 
     [data-theme='neon'] {
@@ -31,12 +40,12 @@
     }
 
     [data-theme='minimal'] {
-        --k-font-heading: 'Georgia', serif;
-        --k-font-body: 'Georgia', serif;
-        --k-bg-primary: #fafafa;
-        --k-text-primary: #111;
-        --k-text-secondary: #555;
-        --k-accent: #000;
+        --k-font-heading: 'Libre Baskerville', serif;
+        --k-font-body: 'Libre Baskerville', serif;
+        --k-bg-primary: #fffdfa;
+        --k-text-primary: #18181b;
+        --k-text-secondary: #52525b;
+        --k-accent: #d97706;
     }
 }
 

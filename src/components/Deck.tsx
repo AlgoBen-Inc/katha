@@ -107,9 +107,9 @@ export function Deck() {
                         animate="center"
                         exit="exit"
                         transition={{
-                            opacity: { duration: 0.3 },
-                            x: { type: "spring", stiffness: 300, damping: 30 },
-                            scale: { duration: 0.4 }
+                            opacity: { duration: 0.6 },
+                            x: { type: "spring", stiffness: 100, damping: 20 },
+                            scale: { duration: 0.6 }
                         }}
                         className="absolute inset-0 w-full h-full"
                     >

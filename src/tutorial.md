@@ -1,5 +1,6 @@
 ---
 layout: title
+theme: professional
 ---
 
 # Welcome to Katha
@@ -21,7 +22,7 @@ The developer-first presentation system.
 
 # Table of Contents
 
-<Toc />
+::toc
 
 ---slide---
 ---
@@ -31,13 +32,19 @@ clicks: 3
 
 # Click to Reveal ✨
 
-<ClickReveal at="1">First, we set up the project.</ClickReveal>
+:::clickreveal{at=1}
+First, we set up the project.
+:::
 
-<ClickReveal at="2">Then, we write our slides in Markdown.</ClickReveal>
+:::clickreveal{at=2}
+Then, we write our slides in Markdown.
+:::
 
-<ClickReveal at="3">Finally, we present!</ClickReveal>
+:::clickreveal{at=3}
+Finally, we present!
+:::
 
-<p className="text-gray-400 text-sm mt-8">Press → or Space to reveal each step</p>
+*Press → or Space to reveal each step*
 
 ---slide---
 ---
@@ -46,13 +53,13 @@ clicks: 3
 
 # Lists Reveal
 
-Reveal list items one by one easily using `<RevealList>`.
+Reveal list items one by one easily using `:::reveallist`
 
-<RevealList>
+:::reveallist
 - ✨ Supports markdown lists
 - 🔄 Automatic step incrementing
 - 📦 Works with nested components
-</RevealList>
+:::
 
 ---slide---
 ---
@@ -141,11 +148,17 @@ You can embed React components directly in your markdown!
 
 Bring your slides to life with component-based animations.
 
-<div className="flex gap-4">
-    <AnimatedComponent animation="bounce">Bouncing</AnimatedComponent>
-    <AnimatedComponent animation="pulse" duration={1}>Pulsing</AnimatedComponent>
-    <AnimatedComponent animation="spin" className="bg-gradient-to-r from-red-500 to-orange-500 rounded-full w-24 h-24 flex items-center justify-center">Spinning</AnimatedComponent>
-</div>
+:::animated{type=bounce}
+Bouncing
+:::
+
+:::animated{type=pulse}
+Pulsing
+:::
+
+:::animated{type=spin class="bg-gradient-to-r from-red-500 to-orange-500 rounded-full w-24 h-24 flex items-center justify-center"}
+Spinning
+:::
 
 ---slide---
 ---
@@ -214,14 +227,15 @@ Katha supports `slide`, `fade`, and `zoom`.
 
 ---slide---
 ---
-transition: zoom
 style:
-  background: 'linear-gradient(135deg, #667eea 0%, #764ba2 100%)'
+  background: 'linear-gradient(135deg, #f0f9ff 0%, #e0f2fe 100%)'
+  color: '#1e293b'
 ---
 
 # Zoom & Custom Styles
 
-This slide uses **zoom** and a custom CSS gradient background via the `style` frontmatter.
+This slide uses a soothing sky-blue gradient background via the `style` frontmatter.
+Custom CSS at your fingertips!
 
 ---slide---
 ---

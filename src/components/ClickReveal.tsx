@@ -66,10 +66,9 @@ interface ClickRevealProps {
 
     /**
      * Step number at which this element becomes visible.
-     * Steps are 1-indexed. If not provided, defaults to 1.
-     * Accepts string (from markdown), number, or object (parser artifact).
+     * Steps are 1-indexed. Defaults to 1.
      */
-    at?: number | string | object;
+    at?: number | string;
 
     /**
      * If true, element is visible UNTIL this step, then hidden.
@@ -97,26 +96,11 @@ export function ClickReveal({
 }: ClickRevealProps): React.ReactElement {
     const { currentStep } = useStep();
 
-    // Parse `at` prop - markdown parsers pass it as string (e.g., at="1")
-    // Use string syntax in markdown: <ClickReveal at="1">
-    let stepNum: number;
-
-    if (typeof at === 'string') {
-        // Primary case: markdown passes string props
-        // Strip curly braces if present (parser artifact: "{1}" instead of "1")
-        const cleaned = at.replace(/[{}]/g, '');
-        stepNum = parseInt(cleaned, 10);
-    } else if (typeof at === 'number') {
-        // Direct React usage with number
-        stepNum = at;
-    } else if (typeof at === 'object' && at !== null) {
-        // Fallback: JSX expression at={1} becomes object in some parsers
-        const keys = Object.keys(at);
-        stepNum = keys.length > 0 ? parseInt(keys[0], 10) : 1;
-    } else {
-        stepNum = 1;
-    }
-    if (Number.isNaN(stepNum)) stepNum = 1;
+    // Parse `at` prop - directives pass attributes as strings
+    // Simplified: handles both string ("1") and number (1) inputs
+    const stepNum = typeof at === 'string'
+        ? parseInt(at.replace(/[{}]/g, ''), 10) || 1
+        : typeof at === 'number' ? at : 1;
 
     // Determine visibility based on step comparison
     const isVisible = hide
@@ -190,10 +174,27 @@ export function RevealList({
     /**
      * Recursively wraps children in ClickReveal components.
      * If a child is a list (ul/ol), it wraps its li children individually.
+     * If a child is a string with list items, it parses them.
      */
     const wrapChildren = (node: ReactNode): ReactNode => {
         return React.Children.map(node, (child) => {
+            // Ignore null/undefined
+            if (child === null || child === undefined) return child;
+
+            // If it's a string, only process if it's not just whitespace
+            if (typeof child === 'string') {
+                if (child.trim() === '') return child;
+                // If it's a meaningful string, it probably should be wrapped if it's a direct child
+                // but usually lists have elements. For now, let's just return it.
+                return child;
+            }
+
             if (!React.isValidElement(child)) return child;
+
+            // If it's a fragment, recurse into its children
+            if (child.type === React.Fragment) {
+                return wrapChildren((child as React.ReactElement<any>).props.children);
+            }
 
             // If it's a list, we want to reveal its items, not the list itself
             if (child.type === 'ul' || child.type === 'ol') {
@@ -208,7 +209,7 @@ export function RevealList({
             currentOffset++;
 
             return (
-                <ClickReveal at={step}>
+                <ClickReveal at={step} key={step}>
                     {child}
                 </ClickReveal>
             );
