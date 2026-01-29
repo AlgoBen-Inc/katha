@@ -24,6 +24,19 @@ export function SlideRenderer({ content }: SlideRendererProps) {
         try {
             const file = unified()
                 .use(remarkParse)
+                .use(() => (tree: any) => {
+                    // Simple plugin to capture meta from code blocks
+                    // Tree is MDAST here
+                    const visit = (node: any) => {
+                        if (node.type === 'code' && node.meta) {
+                            node.data = node.data || {};
+                            node.data.hProperties = node.data.hProperties || {};
+                            node.data.hProperties.meta = node.meta;
+                        }
+                        if (node.children) node.children.forEach(visit);
+                    };
+                    visit(tree);
+                })
                 .use(remarkRehype, { allowDangerousHtml: true })
                 .use(rehypeRaw)
                 .use(rehypeReact, { ...production, components: defaultComponents })

@@ -2,7 +2,9 @@
 import { Button } from '../components/ui/button';
 import { Card, CardHeader, CardTitle, CardContent } from '../components/ui/card';
 import { CodeBlock } from '../components/CodeBlock';
+import { Toc } from '../components/Slide/Toc';
 import { AnimatedComponent } from '../components/AnimatedComponent';
+import { ClickReveal, RevealList } from '../components/ClickReveal';
 
 /**
  * Default Component Map for Rehype React.
@@ -62,6 +64,13 @@ export const defaultComponents = {
     cardcontent: CardContent,
     button: Button,
     animatedcomponent: AnimatedComponent,
+
+    // Click Reveal (Step Animations)
+    clickreveal: ClickReveal,
+    reveallist: RevealList,
+
+    // Navigation
+    toc: Toc,
 
     // Code Blocks (Capture pre/code)
     pre: (props: any) => <div {...props} className="not-prose" />,

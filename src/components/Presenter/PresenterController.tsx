@@ -10,7 +10,7 @@ export function PresenterController() {
     const { slides, loading } = useDeck();
 
     // 2. Navigation
-    const { currentIndex, navigateTo, nextSlide, prevSlide } = useSlideRouter(slides);
+    const { currentIndex, next, prev } = useSlideRouter(slides);
 
     const [currentTime, setCurrentTime] = useState(new Date().toLocaleTimeString());
 
@@ -53,14 +53,14 @@ export function PresenterController() {
                         <Button
                             className="w-32 h-12 text-lg"
                             variant="secondary"
-                            onClick={prevSlide}
+                            onClick={prev}
                             disabled={currentIndex <= 1}
                         >
                             PREV
                         </Button>
                         <Button
                             className="w-32 h-12 text-lg bg-blue-600 hover:bg-blue-500 text-white"
-                            onClick={nextSlide}
+                            onClick={next}
                             disabled={currentIndex >= slides.length}
                         >
                             NEXT

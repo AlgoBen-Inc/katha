@@ -55,3 +55,21 @@ h5,
 h6 {
     font-family: var(--k-font-heading);
 }
+
+/* Shiki Line Highlighting */
+.shiki .line.highlighted {
+    background-color: rgba(255, 255, 255, 0.08);
+    display: inline-block;
+    width: calc(100% + 1.5rem);
+    margin-left: -1.5rem;
+    padding-left: 1.5rem;
+    border-left: 4px solid var(--k-accent);
+}
+
+.shiki {
+    overflow-x: hidden !important;
+}
+
+[data-theme='dark'] .shiki .line.highlighted {
+    background-color: rgba(255, 255, 255, 0.1);
+}

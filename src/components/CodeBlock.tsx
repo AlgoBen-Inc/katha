@@ -1,5 +1,6 @@
 import { useEffect, useState } from 'react';
 import { createHighlighter, Highlighter } from 'shiki';
+import { Mermaid } from './Mermaid';
 
 // Singleton highlighter to avoid re-creation
 let highlighterPromise: Promise<Highlighter> | null = null;
@@ -17,14 +18,44 @@ const getHighlighter = () => {
 interface CodeBlockProps {
     className?: string;
     children?: React.ReactNode;
+    meta?: string;
 }
 
-export function CodeBlock({ className, children }: CodeBlockProps) {
+/**
+ * Parses line ranges from meta string like "{1,3-5}"
+ */
+function parseLineRanges(meta: string): number[] {
+    const rangeMatch = meta.match(/\{([\d,\-\s]+)\}/);
+    if (!rangeMatch) return [];
+
+    const lines: number[] = [];
+    const parts = rangeMatch[1].split(',');
+
+    for (const part of parts) {
+        if (part.includes('-')) {
+            const [start, end] = part.split('-').map(p => parseInt(p.trim(), 10));
+            if (!isNaN(start) && !isNaN(end)) {
+                for (let i = start; i <= end; i++) lines.push(i);
+            }
+        } else {
+            const line = parseInt(part.trim(), 10);
+            if (!isNaN(line)) lines.push(line);
+        }
+    }
+    return lines;
+}
+
+export function CodeBlock({ className, children, meta }: CodeBlockProps) {
     const [html, setHtml] = useState<string | null>(null);
     const language = className?.replace('language-', '') || 'text';
 
     // Ensure children is a string (React children can be complex)
     const code = Array.isArray(children) ? children.join('') : String(children || '');
+
+    // Handle Mermaid diagrams
+    if (language === 'mermaid') {
+        return <Mermaid code={code} />;
+    }
 
     useEffect(() => {
         let mounted = true;
@@ -32,9 +63,20 @@ export function CodeBlock({ className, children }: CodeBlockProps) {
         getHighlighter().then(highlighter => {
             if (!mounted) return;
             try {
+                const highlightedLines = meta ? parseLineRanges(meta) : [];
+
                 const highlighted = highlighter.codeToHtml(code, {
                     lang: language,
-                    theme: 'dracula'
+                    theme: 'dracula',
+                    transformers: [
+                        {
+                            line(node, line) {
+                                if (highlightedLines.includes(line)) {
+                                    this.addClassToHast(node, 'highlighted');
+                                }
+                            }
+                        }
+                    ]
                 });
 
                 // Inject padding class (p-6 for more space)
@@ -55,7 +97,7 @@ export function CodeBlock({ className, children }: CodeBlockProps) {
         });
 
         return () => { mounted = false; };
-    }, [code, language]);
+    }, [code, language, meta]);
 
     if (!html) {
         return (

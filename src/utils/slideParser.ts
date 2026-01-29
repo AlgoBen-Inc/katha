@@ -31,7 +31,7 @@ export function parseSlides(rawMarkdown: string): Slide[] {
             let notes = "";
 
             // Extract Notes
-            const contentWithoutNotes = rawContent.replace(NOTES_REGEX, (match, capturedNotes) => {
+            const contentWithoutNotes = rawContent.replace(NOTES_REGEX, (_match, capturedNotes) => {
                 notes += capturedNotes.trim() + "\n";
                 return ""; // Remove notes from renderable content
             });
@@ -49,12 +49,15 @@ export function parseSlides(rawMarkdown: string): Slide[] {
                 slots[name] = content.trim();
             }
 
-            // ID Generation Strategy
+            // ID & Title Generation Strategy
             let slideId = parsed.data.id;
+            const h1Match = rawContent.match(FIRST_H1_REGEX);
+
+            if (h1Match && !parsed.data.title) {
+                parsed.data.title = h1Match[1].trim();
+            }
 
             if (!slideId) {
-                // Try to find first H1
-                const h1Match = rawContent.match(FIRST_H1_REGEX);
                 if (h1Match) {
                     slideId = h1Match[1]
                         .toLowerCase()
